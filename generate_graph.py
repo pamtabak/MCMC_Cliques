@@ -36,7 +36,6 @@ def read_graph (filename, directed):
 			v_prop[v2] = label2
 			vertex_dict[label2] = v2
 
-		e = g.add_edge(v1, v2)
+		g.add_edge(v1, v2)
 
-	print(number_of_vertices)
 	return (g, v_prop)
