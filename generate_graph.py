@@ -35,7 +35,5 @@ def read_graph (filename, directed):
 			v2 = g.add_vertex()
 			v_prop[v2] = label2
 			vertex_dict[label2] = v2
-
 		g.add_edge(v1, v2)
-
-	return (g, v_prop)
+	return (g, v_prop, vertex_dict)
