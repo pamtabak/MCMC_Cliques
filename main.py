@@ -6,6 +6,7 @@ from generate_graph import *
 #from find_closest_triangles import *
 #from get_closest_maximal_cliques import *
 from get_neighboring_cliques import *
+from get_random_clique import *
 
 # graph_data = read_graph("Datasets/teste.txt", False)
 g, vertex_dict = read_graph("Datasets/teste.txt", False)
@@ -22,6 +23,7 @@ for v in g.vp.labels:
 #print()
 #print(find_triangle(g, vertex_dict))
 #print()
-print(get_neighboring_cliques(g, vertex_dict, ['0','1','2']))
+#print(get_neighboring_cliques(g, vertex_dict, ['0','1','2']))
+print(get_random_clique(g, vertex_dict))
 
 # BronKerbosch2([], nodes, [], g, vertex_dict)
