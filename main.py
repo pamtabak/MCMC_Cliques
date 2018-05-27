@@ -1,5 +1,5 @@
 from graph_tool.all import *
-from generate_graph import *
+from read_graph import *
 from bronkerbosch2 import *
 #from bfs import *
 #from find_triangle import *
@@ -10,7 +10,7 @@ from get_random_clique import *
 from find_optimal_clique import *
 
 # graph_data = read_graph("Datasets/teste.txt", False)
-g, vertex_dict = read_graph("Datasets/teste2.txt", False)
+g, vertex_dict = read_graph("Datasets/frb30-15-2.clq", False)
 
 nodes = []
 for v in g.vp.labels:
