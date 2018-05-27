@@ -9,8 +9,9 @@ from get_neighboring_cliques import *
 from get_random_clique import *
 from find_optimal_clique import *
 
-# graph_data = read_graph("Datasets/teste.txt", False)
-g, vertex_dict = read_graph("Datasets/frb30-15-2.clq", False)
+# g, vertex_dict = read_graph("Datasets/frb30-15-2.clq", False)
+g, vertex_dict = read_graph("Datasets/KarateClub.txt", False)
+print("finished reading graph")
 
 nodes = []
 for v in g.vp.labels:
@@ -26,7 +27,9 @@ for v in g.vp.labels:
 #print()
 #print(get_neighboring_cliques(g, vertex_dict, ['0','1','2']))
 initial_clique = get_random_clique(g, vertex_dict)
+print("already got initial clique, now we are searching for optimal")
 find_optimal_clique(g, vertex_dict, initial_clique, 10, 100, 0.9)
 print()
 
+print("bronkerbosch2")
 bron_kerbosch2([], nodes, [], g, vertex_dict)
