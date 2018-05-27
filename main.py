@@ -1,6 +1,6 @@
 from graph_tool.all import *
 from generate_graph import *
-from clique import *
+from bronkerbosch2 import *
 
 graph_data = read_graph("Datasets/KarateClub.txt", False)
 # graph_data = read_graph("Datasets/teste.txt", False)
