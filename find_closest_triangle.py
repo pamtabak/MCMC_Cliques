@@ -1,16 +1,20 @@
 from graph_tool.all import *
 import numpy as np
 from get_neighbors import *
-from bfs import *
 
 # we want to find closest triangle from node inside a clique.
 # therefore, this triangle can`t be inside the clique we are checking
 def find_closest_triangle (g, vertex_dict, pivot, clique):
-	for e in g.edges(): #edge u, v
-		u = e.source()
-		v = e.target()
-		nodes = bfs (pivot, g, vertex_dict)
-		for w in nodes:
+	marked_dict = {}
+	queue = []
+	queue.append(pivot)
+	marked_dict[pivot] = True
+
+	while (len(queue) != 0):
+		w = queue.pop(0) #BFS
+		for e in g.edges(): #edge u, v
+			u = e.source()
+			v = e.target()
 			if g.edge(v, vertex_dict[w]) != None and g.edge(u, vertex_dict[w]) != None:
 				t = []
 				t.append(g.vp.labels[v])
@@ -19,6 +23,11 @@ def find_closest_triangle (g, vertex_dict, pivot, clique):
 				if (sublist(t, clique)):
 					continue
 				return t
+		neighbors = get_neighbors(w, g, vertex_dict)
+		for n in neighbors:
+			if (n not in marked_dict):
+				marked_dict[n] = True
+				queue.append(n)
 
 def sublist(list1, list2):
 	for element in list1:
