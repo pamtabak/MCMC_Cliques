@@ -2,9 +2,9 @@ from graph_tool.all import *
 import numpy as np
 from functools import reduce
 from get_neighbors import *
-from find_closest_triangle import *
+from find_closest_triangles import *
 
-def get_closest_maximal_clique (g, vertex_dict, pivot, clique):
+def get_closest_maximal_cliques (g, vertex_dict, pivot, clique):
 	closest_triangles = find_closest_triangles (g, vertex_dict, pivot, clique)
 	maximal_cliques = []
 	for closest_triangle in closest_triangles:
@@ -26,7 +26,7 @@ def get_closest_maximal_clique (g, vertex_dict, pivot, clique):
 			continue
 		if (len(nodes_in_common) == 1):
 			for n in nodes_in_common:
-				maximal_clique.append(n)	
+				maximal_clique.append(n)
 				maximal_clique.sort()
 				if (maximal_clique not in maximal_cliques):
 					maximal_cliques.append(maximal_clique)
