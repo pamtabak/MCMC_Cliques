@@ -15,13 +15,13 @@ nodes = []
 for v in g.vp.labels:
 	nodes.append(v)
 
-#print(get_closest_maximal_clique (g, vertex_dict, nodes[0], ['0', '1', '2']))
+# print(get_closest_maximal_clique (g, vertex_dict, nodes[0], ['0', '1', '2']))
 #print()
-#print(get_closest_maximal_clique (g, vertex_dict, nodes[0], ['1','3','9']))
+print(get_closest_maximal_clique (g, vertex_dict, nodes[0], ['1','3','9']))
 #print()
 #print(find_closest_triangle (g, vertex_dict, nodes[0], ['0','1','2']))
 #print()
 #print(find_triangle(g, vertex_dict))
 #print()
 
-BronKerbosch2([], nodes, [], g, vertex_dict)
+# BronKerbosch2([], nodes, [], g, vertex_dict)
