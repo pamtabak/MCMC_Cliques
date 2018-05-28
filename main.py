@@ -10,8 +10,8 @@ from get_random_clique import *
 from find_optimal_clique import *
 import annealing_strategies as strats
 
+# g, vertex_dict = read_graph("Datasets/david.col", False)
 g, vertex_dict = read_graph("Datasets/games120.txt", False)
-# g, vertex_dict = read_graph("Datasets/KarateClub.txt", False)
 print("finished reading graph")
 
 nodes = []
@@ -29,7 +29,7 @@ for v in g.vp.labels:
 #print(get_neighboring_cliques(g, vertex_dict, ['0','1','2']))
 initial_clique = get_random_clique(g, vertex_dict)
 print("already got initial clique, now we are searching for optimal")
-find_optimal_clique(g, vertex_dict, initial_clique, 100, 1000, strats.exponential, {'beta': 0.99})
+find_optimal_clique(g, vertex_dict, initial_clique, 10, 100, strats.exponential, {'beta': 0.99})
 print()
 
 # print("bronkerbosch2")

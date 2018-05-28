@@ -7,11 +7,37 @@ from find_closest_triangles import *
 def get_closest_maximal_cliques (g, vertex_dict, pivot, clique):
 	closest_triangles = find_closest_triangles (g, vertex_dict, pivot, clique)
 	maximal_cliques = []
+	
+	#then we only need to calculate distance between nodes once
+	min_dist = {}
+
 	for closest_triangle in closest_triangles:
+		#first we check if triangle`s "head" (4th item from tuple) is at distance d from any node of the clique
+		#if param is 0, then we don`t need to check. if 1, then we do need to check
+		#we already know that it`s not distance d from pivot
+		correct_triangle_distance = False
+		if (closest_triangle[1] == 0):
+			correct_triangle_distance = True
+		if (closest_triangle[1] == 1):
+			for node in clique:
+				if (correct_triangle_distance):
+					break
+				if (node == pivot):
+					continue
+				#get distance between triangle`s "head" and node
+				node_name_concat = (str(node) + "_" + str(closest_triangle[3]))
+				if (node_name_concat not in min_dist):
+					min_dist[node_name_concat] = shortest_distance(g, source=g.vertex(vertex_dict[node]), target=g.vertex(vertex_dict[closest_triangle[3]]))
+				if (min_dist[node_name_concat] == closest_triangle[2]):
+					correct_triangle_distance = True
+					break
+		if (not correct_triangle_distance):
+			continue
+
 		#now we need to get maximal clique with this triangle
-		maximal_clique = closest_triangle
-		# while (True):
-			#we get the neighbors from each node inside clique and see how many match
+		maximal_clique = closest_triangle[0]
+
+		#we get the neighbors from each node inside clique and see how many match
 		neighbors = []
 		for n in maximal_clique:
 			neighbors.append(get_neighbors(n, g, vertex_dict))

@@ -21,7 +21,8 @@ def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, annealing_func, 
         print('T: {}'.format(T))
 
         # find states (cliques) that are neighbors of current state in the markov chain
-        neighboring_cliques = get_neighboring_cliques(g, vertex_dict, state)
+        # neighboring_cliques = get_neighboring_cliques(g, vertex_dict, state)
+        neighboring_cliques = get_closest_maximal_cliques(g, vertex_dict, state[0], state)
         chain_adjacency_dict[str(state)] = neighboring_cliques
 
         transitions = []
