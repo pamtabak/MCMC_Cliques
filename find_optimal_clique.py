@@ -14,6 +14,7 @@ def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, beta):
         print('Iteration: {}'.format(t))
         print('State: {}'.format(state))
         print('Optimal clique: {}'.format(optimal_clique))
+        print('Optimal clique size: {}'.format(len(optimal_clique)))
 
         # update annealing value for this iteration
         T = T_0 * np.power(beta, t)
