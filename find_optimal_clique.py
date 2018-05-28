@@ -3,7 +3,7 @@ import numpy as np
 from get_neighboring_cliques import *
 import ast
 
-def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, beta):
+def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, annealing_func, annealing_params_dict):
     optimal_clique = initial_clique # what we're looking for
     chain_adjacency_dict = {} # stores, for each clique, its list of neighbors in the markov chain.
                               # dictionary keys are string representations of the lists that represents the cliques,
@@ -17,7 +17,7 @@ def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, beta):
         print('Optimal clique size: {}'.format(len(optimal_clique)))
 
         # update annealing value for this iteration
-        T = T_0 * np.power(beta, t)
+        T = annealing_func(T_0, t, annealing_params_dict)
         print('T: {}'.format(T))
 
         # find states (cliques) that are neighbors of current state in the markov chain
