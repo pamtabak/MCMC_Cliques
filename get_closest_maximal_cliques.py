@@ -12,6 +12,10 @@ def get_closest_maximal_cliques (g, vertex_dict, pivot, clique):
 	min_dist = {}
 
 	for closest_triangle in closest_triangles:
+
+		if (is_triangle_inside_maximal_clique (closest_triangle[0], maximal_cliques)):
+			continue
+
 		#first we check if triangle`s "head" (4th item from tuple) is at distance d from any node of the clique
 		#if param is 0, then we don`t need to check. if 1, then we do need to check
 		#we already know that it`s not distance d from pivot
@@ -74,3 +78,9 @@ def get_closest_maximal_cliques (g, vertex_dict, pivot, clique):
 		if (maximal_clique not in maximal_cliques):
 			maximal_cliques.append(maximal_clique)
 	return maximal_cliques
+
+def is_triangle_inside_maximal_clique (triangle, maximal_cliques):
+	for clique in maximal_cliques:
+		if (triangle[0] == clique[0] and triangle[1] == clique[1] and triangle[2] == clique[2]):
+			return True
+	return False
