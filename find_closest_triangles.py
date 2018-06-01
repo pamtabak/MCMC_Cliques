@@ -10,7 +10,6 @@ def find_closest_triangles (g, vertex_dict, pivot, clique):
 	queue.append(pivot)
 	marked_dict[pivot] = True
 	triangles = [] #tuple containing: triangle, dist - min_dist, dist, node
-	aux_triangles = [] #list containing triangles only, to verify duplicates
 
 	#min distance between pivot and any triangle
 	dist 	 = -1
@@ -19,12 +18,9 @@ def find_closest_triangles (g, vertex_dict, pivot, clique):
 
 	while (len(queue) != 0):
 		w = queue.pop(0) #BFS
-		if (dist != -1 and bfs_dist[w] > (dist + 1)):
+		if (dist != -1 and bfs_dist[w] > dist):
 			#It means we have already find triangles at min distance and there are no more
 			#nodes at that min distance to be checked
-			#We want to return also triangles at dist + 1, because then we can look for triangles from only
-			#one node from the clique (since all nodes at a clique are dist 1). But we will need to check if
-			#triangles is dist from at least one of the nodes from the clique
 			break
 		neighbors = get_neighbors(w, g, vertex_dict)
 		for u in range(0, len(neighbors)):
@@ -41,18 +37,9 @@ def find_closest_triangles (g, vertex_dict, pivot, clique):
 					t.append(w)
 					t.append(g.vp.labels[vertex_dict[n1]])
 					t.sort()
-					if (sublist(t, clique)):
-						continue
-					if (t not in aux_triangles):
+					if (t not in triangles):
 						if (dist == -1):
 						# it means we found the first triangle
 							dist = bfs_dist[w]
-						aux_triangles.append(t)
-						triangles.append((t, bfs_dist[w] - dist, dist, w))
-	return triangles
-
-def sublist(list1, list2):
-	for element in list1:
-		if (element not in list2):
-			return False
-	return True
+						triangles.append(t)
+	return (triangles, dist)

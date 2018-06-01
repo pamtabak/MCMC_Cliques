@@ -26,7 +26,7 @@ def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, annealing_func, 
         if (str(state) in chain_adjacency_dict):
             neighboring_cliques = chain_adjacency_dict[str(state)]
         else:
-            neighboring_cliques = get_closest_maximal_cliques(g, vertex_dict, state[0], state)
+            neighboring_cliques = get_closest_maximal_cliques(g, vertex_dict, state)
             chain_adjacency_dict[str(state)] = neighboring_cliques
 
         transitions = []
