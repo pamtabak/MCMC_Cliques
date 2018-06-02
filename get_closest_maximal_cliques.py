@@ -42,9 +42,6 @@ def get_closest_maximal_cliques (g, vertex_dict, init_clique):
 						continue
 
 					cliques = []
-					# preciso gerar todos os possiveis subconjuntos com nodes_in_common
-					# ver se e valido (todos sao arestas)
-					# ver se e maximal (no final)
 
 					binary_subset  = []
 					one_binary     = ""
@@ -90,12 +87,13 @@ def get_closest_maximal_cliques (g, vertex_dict, init_clique):
 
 					for c1 in range(0, len(cliques)):
 						for c2 in range(0, len(cliques)):
-						#we need to see if clique is maximal or not
+							if (c1 == c2):
+								continue
+							#we need to see if clique is maximal or not
 							if (sublist(cliques[c1], cliques[c2])):
 								continue
 							if (clique not in maximal_cliques):
 								maximal_cliques.append(clique)
-
 	return maximal_cliques
 
 def bin_add(*args): 
