@@ -13,8 +13,9 @@ from get_neighbors import *
 #            X := X ⋃ {v}
 def bron_kerbosch2(R, P, X, g, vertex_dict, results):
 	if (len(P) == 0 and len(X) == 0):
-		print(R)
-		results.append(list(R))
+		R.sort()
+		if (str(list(R)) not in results):
+			results.append(str(list(R)))
 		return R
 	p_union_x 		= np.union1d(P, X)
 	pivot 	  		= p_union_x[np.random.randint(len(p_union_x))]

@@ -4,6 +4,8 @@ from functools import reduce
 from get_neighbors import *
 from find_closest_triangles import *
 import copy
+from bronkerbosch2 import *
+import ast
 
 def get_closest_maximal_cliques (g, vertex_dict, init_clique):
 	min_dist  = len(vertex_dict)
@@ -42,52 +44,22 @@ def get_closest_maximal_cliques (g, vertex_dict, init_clique):
 						continue
 
 					cliques = []
-
-					binary_subset = [0] * len(nodes_in_common)
-
-					# string representing 1 in binary, with len(nodes_in_common) bits
-					one_binary = "0" * (len(nodes_in_common) - 1) + "1"
-
-					while (not (all(item == '1' for item in binary_subset))):
-						binary = ''.join(map(str, binary_subset))
-
-						binary = bin_add(binary, one_binary)
-						for b in range(len(binary_subset)):
-							if (b >= len(binary)):
-								binary_subset[b] = 0
-							else:
-								binary_subset[b] = binary[b]
-
-						#check if valid clique. each element with 1 needs to be adjacent
-						nodes_to_check = []
-						for i in range(0, len(binary_subset)):
-							if (binary_subset[i] == '1'):
-								nodes_to_check.append(nodes_in_common[i])
-						valid_clique = True
-						for u in range(0, len(nodes_to_check)):
-							if (not valid_clique):
-								break
-							for v in range(u+1, len(nodes_to_check)):
-								if (g.edge(vertex_dict[nodes_in_common[u]], vertex_dict[nodes_in_common[v]]) == None):
-									valid_clique = False
-									break
-						if (valid_clique):
-							clique = copy.copy(triangle)
-							for n in nodes_to_check:
-								clique.append(n)
-							clique.sort()
-							if (clique not in cliques and not (sublist(triangle, init_clique))):
-								cliques.append(clique)
+					bron_kerbosch2([], nodes_in_common, [], g, vertex_dict, cliques)
 
 					for c1 in range(0, len(cliques)):
 						for c2 in range(0, len(cliques)):
 							if (c1 == c2):
 								continue
 							#we need to see if clique is maximal or not
-							if (sublist(cliques[c1], cliques[c2])):
+							clique_1 = list(ast.literal_eval(cliques[c1]))
+							clique_2 = list(ast.literal_eval(cliques[c2]))
+							if (sublist(clique_1, clique_2)):
 								continue
-							if (clique not in maximal_cliques):
-								maximal_cliques.append(clique)
+							for n in t:
+								clique_1.append(n)
+							clique_1.sort()
+							if (clique_1 not in maximal_cliques):
+								maximal_cliques.append(clique_1)
 	return maximal_cliques
 
 def bin_add(*args):
