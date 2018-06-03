@@ -8,6 +8,7 @@ from bronkerbosch2 import *
 from get_random_clique import *
 from find_optimal_clique import *
 import annealing_strategies as strats
+import time
 
 def get_annealing_strat(strat_name):
 	if strat_name == "exponential":
@@ -32,6 +33,8 @@ data['initial_temperature'] = args.initial_temperature
 data['annealing_strat'] = args.annealing_strat
 data['annealing_params'] = args.annealing_params
 
+start_time = time.time()
+
 g, vertex_dict = read_graph(args.file, False)
 print("finished reading graph")
 
@@ -45,6 +48,9 @@ print(optimal_clique)
 
 data['optimal_clique'] = optimal_clique
 data['optimal_clique_size'] = len(optimal_clique)
+
+elapsed_time = time.time() - start_time
+print("elapsed time: " + str(elapsed_time))
 
 print("bronkerbosch2")
 bronkerbosch_results = []
