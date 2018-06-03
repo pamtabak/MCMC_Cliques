@@ -43,16 +43,10 @@ def get_closest_maximal_cliques (g, vertex_dict, init_clique):
 
 					cliques = []
 
-					binary_subset  = []
-					one_binary     = ""
-					for i in range(len(nodes_in_common)):
-						binary_subset.append(0)
-						if (i == len(nodes_in_common) - 1):
-							one_binary += "1"
-						else:	
-							one_binary += "0"
+					binary_subset = [0] * len(nodes_in_common)
 
-					binary_subset[0] = 0
+					# string representing 1 in binary, with len(nodes_in_common) bits
+					one_binary = "0" * (len(nodes_in_common) - 1) + "1"
 
 					while (not (all(item == '1' for item in binary_subset))):
 						binary = ''.join(map(str, binary_subset))
@@ -96,7 +90,7 @@ def get_closest_maximal_cliques (g, vertex_dict, init_clique):
 								maximal_cliques.append(clique)
 	return maximal_cliques
 
-def bin_add(*args): 
+def bin_add(*args):
 	return bin(sum(int(x, 2) for x in args))[2:]
 
 def sublist(list1, list2):

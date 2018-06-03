@@ -11,7 +11,7 @@ def update_chain (chain_adjacency_dict, current_state, explored_cliques, g, vert
         neighboring_cliques = get_closest_maximal_cliques(g, vertex_dict, current_state)
         for neighboring_clique in neighboring_cliques:
             if (neighboring_clique not in chain_adjacency_dict[str(current_state)]):
-                chain_adjacency_dict[str(current_state)].append(neighboring_clique)   
+                chain_adjacency_dict[str(current_state)].append(neighboring_clique)
             if (str(neighboring_clique) not in explored_cliques):
                 if (str(neighboring_clique) not in chain_adjacency_dict):
                     chain_adjacency_dict[str(neighboring_clique)] = []
@@ -62,7 +62,7 @@ def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, annealing_func, 
         self_prob = 1 - np.sum(transition_probabilities)
 
         # update transitions and probabilities adding self loop
-        transitions = transitions + [str(state)]
+        transitions.append(str(state))
         transition_probabilities.append(self_prob)
         #print(transition_probabilities)
 
