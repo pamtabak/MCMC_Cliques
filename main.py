@@ -32,6 +32,7 @@ data['walk_length'] = args.walk_length
 data['initial_temperature'] = args.initial_temperature
 data['annealing_strat'] = args.annealing_strat
 data['annealing_params'] = args.annealing_params
+data['elapsed_time'] = 0
 
 start_time = time.time()
 
@@ -51,13 +52,14 @@ data['optimal_clique_size'] = len(optimal_clique)
 
 elapsed_time = time.time() - start_time
 print("elapsed time: " + str(elapsed_time))
+data['elapsed_time']= elapsed_time
 
-print("bronkerbosch2")
-bronkerbosch_results = []
-bron_kerbosch2([], nodes, [], g, vertex_dict, bronkerbosch_results)
+# print("bronkerbosch2")
+# bronkerbosch_results = []
+# bron_kerbosch2([], nodes, [], g, vertex_dict, bronkerbosch_results)
 
-data['bronkerbosch_optimal_clique'] = bronkerbosch_results[np.argmax(list(map(len, bronkerbosch_results)))]
-data['bronkerbosch_optimal_clique_size'] = len(data['bronkerbosch_optimal_clique'])
+# data['bronkerbosch_optimal_clique'] = bronkerbosch_results[np.argmax(list(map(len, bronkerbosch_results)))]
+# data['bronkerbosch_optimal_clique_size'] = len(data['bronkerbosch_optimal_clique'])
 
 with open('results_{}_{}_{}.json'.format(args.file.replace("Datasets/", ""), args.walk_length, args.initial_temperature), 'w') as f:
 	f.write(json.dumps(data, indent=4, sort_keys=True))
