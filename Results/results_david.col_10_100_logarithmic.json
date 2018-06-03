@@ -1,0 +1,26 @@
+{
+    "annealing_params": {
+        "a": 1000,
+        "b": 1,
+        "beta": 0.99
+    },
+    "annealing_strat": "logarithmic",
+    "elapsed_time": 583.9753255844116,
+    "file": "Datasets/david.col",
+    "initial_temperature": 100,
+    "optimal_clique": [
+        "19",
+        "2",
+        "32",
+        "34",
+        "4",
+        "46",
+        "55",
+        "66",
+        "74",
+        "83",
+        "87"
+    ],
+    "optimal_clique_size": 11,
+    "walk_length": 10
+}

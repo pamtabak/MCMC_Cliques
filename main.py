@@ -23,7 +23,7 @@ parser.add_argument("file")
 parser.add_argument("walk_length", type=int)
 parser.add_argument("initial_temperature", type=int)
 parser.add_argument("--annealing_strat", choices=['exponential','linear','logarithmic'], default='exponential')
-parser.add_argument("--annealing_params", type=dict, default={'beta':0.99})
+parser.add_argument("--annealing_params", type=dict, default={'beta':0.99,'a':1000,'b':1})
 args = parser.parse_args()
 
 data = {}
@@ -61,5 +61,5 @@ data['elapsed_time']= elapsed_time
 # data['bronkerbosch_optimal_clique'] = bronkerbosch_results[np.argmax(list(map(len, bronkerbosch_results)))]
 # data['bronkerbosch_optimal_clique_size'] = len(data['bronkerbosch_optimal_clique'])
 
-with open('results_{}_{}_{}.json'.format(args.file.replace("Datasets/", ""), args.walk_length, args.initial_temperature), 'w') as f:
+with open('Results/results_{}_{}_{}_{}.json'.format(args.file.replace("Datasets/", ""), args.walk_length, args.initial_temperature, args.annealing_strat), 'w') as f:
 	f.write(json.dumps(data, indent=4, sort_keys=True))
