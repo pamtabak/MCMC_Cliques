@@ -1,36 +1,57 @@
+import argparse
+import sys
+import json
+import numpy as np
 from graph_tool.all import *
 from read_graph import *
 from bronkerbosch2 import *
-#from bfs import *
-#from find_triangle import *
-#from find_closest_triangles import *
-#from get_closest_maximal_cliques import *
-from get_neighboring_cliques import *
 from get_random_clique import *
 from find_optimal_clique import *
 import annealing_strategies as strats
 
-# g, vertex_dict = read_graph("Datasets/david.col", False)
-g, vertex_dict = read_graph("Datasets/games120.txt", False)
+def get_annealing_strat(strat_name):
+	if strat_name == "exponential":
+		return strats.exponential
+	elif strat_name == "linear":
+		return strats.linear
+	elif strat_name == "logarithmic":
+		return strats.logarithmic
+
+parser = argparse.ArgumentParser()
+parser.add_argument("file")
+parser.add_argument("walk_length", type=int)
+parser.add_argument("initial_temperature", type=int)
+parser.add_argument("--annealing_strat", choices=['exponential','linear','logarithmic'], default='exponential')
+parser.add_argument("--annealing_params", type=dict, default={'beta':0.99})
+args = parser.parse_args()
+
+data = {}
+data['file'] = args.file
+data['walk_length'] = args.walk_length
+data['initial_temperature'] = args.initial_temperature
+data['annealing_strat'] = args.annealing_strat
+data['annealing_params'] = args.annealing_params
+
+g, vertex_dict = read_graph(args.file, False)
 print("finished reading graph")
 
-nodes = []
-for v in g.vp.labels:
-	nodes.append(v)
+nodes = [v for v in g.vp.labels]
 
-# print(get_closest_maximal_cliques (g, vertex_dict, nodes[0], ['0', '1', '2']))
-#print()
-#print(get_closest_maximal_cliques (g, vertex_dict, nodes[0], ['1','3','9']))
-#print()
-#print(find_closest_triangle (g, vertex_dict, nodes[0], ['0','1','2']))
-#print()
-#print(find_triangle(g, vertex_dict))
-#print()
-#print(get_neighboring_cliques(g, vertex_dict, ['0','1','2']))
 initial_clique = get_random_clique(g, vertex_dict)
 print("already got initial clique, now we are searching for optimal")
-find_optimal_clique(g, vertex_dict, initial_clique, 10, 100, strats.exponential, {'beta': 0.99})
-print()
 
-# print("bronkerbosch2")
-# bron_kerbosch2([], nodes, [], g, vertex_dict)
+optimal_clique = find_optimal_clique(g, vertex_dict, initial_clique, args.walk_length, args.initial_temperature, get_annealing_strat(args.annealing_strat), args.annealing_params)
+print(optimal_clique)
+
+data['optimal_clique'] = optimal_clique
+data['optimal_clique_size'] = len(optimal_clique)
+
+print("bronkerbosch2")
+bronkerbosch_results = []
+bron_kerbosch2([], nodes, [], g, vertex_dict, bronkerbosch_results)
+
+data['bronkerbosch_optimal_clique'] = bronkerbosch_results[np.argmax(list(map(len, bronkerbosch_results)))]
+data['bronkerbosch_optimal_clique_size'] = len(data['bronkerbosch_optimal_clique'])
+
+with open('results_{}_{}_{}.json'.format(args.file.replace("Datasets/", ""), args.walk_length, args.initial_temperature), 'w') as f:
+	f.write(json.dumps(data, indent=4, sort_keys=True))

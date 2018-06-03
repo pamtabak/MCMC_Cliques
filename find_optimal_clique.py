@@ -34,6 +34,11 @@ def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, annealing_func, 
 
         # update annealing value for this iteration
         T = annealing_func(T_0, t, annealing_params_dict)
+
+        # avoid division by zero and negative temperatures (exponent sign gets flipped)
+        if T <= 0:
+            break
+
         print('T: {}'.format(T))
 
         # find states (cliques) that are neighbors of current state in the markov chain
@@ -71,6 +76,8 @@ def find_optimal_clique(g, vertex_dict, initial_clique, L, T_0, annealing_func, 
         state = ast.literal_eval(np.random.choice(transitions, p=transition_probabilities))
 
         print()
+
+    return optimal_clique
 
 def get_accept_probability(state, neighbor, chain_adjacency_dict, T):
     # boltzman distribution
