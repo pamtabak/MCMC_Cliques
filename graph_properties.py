@@ -16,6 +16,8 @@ data['file'] = args.file
 g, vertex_dict = read_graph(args.file, False)
 print("finished reading graph")
 
+data['density'] = 2 * g.num_edges() / (g.num_vertices() * (g.num_vertices() - 1))
+
 nodes = [v for v in g.vp.labels]
 
 data['global_clustering'] = global_clustering(g)
