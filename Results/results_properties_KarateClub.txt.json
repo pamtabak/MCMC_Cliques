@@ -1,0 +1,12 @@
+{
+    "average_degree": [
+        4.588235294117647,
+        0.6551864509961259
+    ],
+    "diameter": 5.0,
+    "file": "Datasets/KarateClub.txt",
+    "global_clustering": [
+        0.2556818181818182,
+        0.06314746595079679
+    ]
+}

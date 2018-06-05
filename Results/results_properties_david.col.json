@@ -1,0 +1,12 @@
+{
+    "average_degree": [
+        18.666666666666668,
+        2.250213458065994
+    ],
+    "diameter": 3.0,
+    "file": "Datasets/david.col",
+    "global_clustering": [
+        0.3427241255819506,
+        0.16723839497505733
+    ]
+}
